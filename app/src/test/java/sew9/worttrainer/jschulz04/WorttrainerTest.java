@@ -9,25 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 
 class WorttrainerTest {
-
-    /*
-     * Funktion von Speichern und Laden kombiniert wird getestet
-     */
-    @Test void SpeichernUndLadenTest() {
-        WortListe wortliste1 = new WortListe();
-        WortTrainer trainer1 = new WortTrainer(wortliste1);
-        trainer1.addRichtig(2);
-        trainer1.addFalsch(5);
-        SpeichernUndLaden sul = new SpeichernUndLaden(trainer1);
-        try {
-            sul.speichern("testspeichern.txt");
-            sul.laden("testladen.txt");
-        } catch (IOException e) {
-            System.out.println("Speichern/Laden fehlgeschlagen");
-        }
-        assertEquals(2,trainer1.getRichtig());
-        assertEquals(5,trainer1.getFalsch());
-    }
     
     /*
      * Funktion vom Laden wird getestet
@@ -59,6 +40,28 @@ class WorttrainerTest {
         } catch (IOException e) {
             System.out.println("Speichern fehlgeschlagen");
         }
+    }
+
+    /*
+     * Funktion von Speichern und Laden kombiniert wird getestet
+     */
+    @Test void SpeichernUndLadenTest() {
+        WortListe wortliste1 = new WortListe();
+        WortTrainer trainer1 = new WortTrainer(wortliste1);
+        trainer1.addRichtig(2);
+        trainer1.addFalsch(5);
+        int richtig=0, falsch = 0;
+        SpeichernUndLaden sul = new SpeichernUndLaden(trainer1);
+        try {
+            sul.speichern("SpeichernUndLadenTest.txt");
+            richtig = trainer1.getRichtig();
+            falsch = trainer1.getFalsch();
+            sul.laden("SpeichernUndLadenTest.txt");
+        } catch (IOException e) {
+            System.out.println("Speichern/Laden fehlgeschlagen");
+        }
+        assertEquals(richtig+2,trainer1.getRichtig());
+        assertEquals(falsch+5,trainer1.getFalsch());
     }
 
     /*
