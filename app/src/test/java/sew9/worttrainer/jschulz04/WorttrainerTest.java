@@ -6,8 +6,75 @@ package sew9.worttrainer.jschulz04;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
 class WorttrainerTest {
-    @Test void test() {
-        System.out.println("GEHT");
+
+    /*
+     * Funktion von Speichern und Laden kombiniert wird getestet
+     */
+    @Test void SpeichernUndLadenTest() {
+        WortListe wortliste1 = new WortListe();
+        WortTrainer trainer1 = new WortTrainer(wortliste1);
+        trainer1.addRichtig(2);
+        trainer1.addFalsch(5);
+        SpeichernUndLaden sul = new SpeichernUndLaden(trainer1);
+        try {
+            sul.speichern("testspeichern.txt");
+            sul.laden("testladen.txt");
+        } catch (IOException e) {
+            System.out.println("Speichern/Laden fehlgeschlagen");
+        }
+        assertEquals(2,trainer1.getRichtig());
+        assertEquals(5,trainer1.getFalsch());
+    }
+    
+    /*
+     * Funktion vom Laden wird getestet
+     */
+    @Test void LadenTest() {
+        WortListe wortliste1 = new WortListe();
+        WortTrainer trainer1 = new WortTrainer(wortliste1);
+        SpeichernUndLaden sul = new SpeichernUndLaden(trainer1);
+        try {
+            sul.laden("LadenTest.txt");
+        } catch (IOException e) {
+            System.out.println("Laden fehlgeschlagen");
+        }
+        assertEquals(10,trainer1.getRichtig());
+        assertEquals(5,trainer1.getFalsch());
+    }
+
+    /*
+     * Funktion von Speichern wird getestet
+     */
+    @Test void SpeichernTest() {
+        WortListe wortliste1 = new WortListe();
+        WortTrainer trainer1 = new WortTrainer(wortliste1);
+        trainer1.addRichtig(2);
+        trainer1.addFalsch(5);
+        SpeichernUndLaden sul = new SpeichernUndLaden(trainer1);
+        try {
+            sul.speichern("SpeichernTest.txt");
+        } catch (IOException e) {
+            System.out.println("Speichern fehlgeschlagen");
+        }
+    }
+
+    /*
+     * Funktion der Wortliste wird getestet
+     */
+    @Test void WortlisteTest() {
+        WortEintrag worteintrag1 = new WortEintrag("Kuh", "https://media.istockphoto.com/id/1319467946/photo/young-black-and-white-cow-heifer-in-a-meadow-looking-in-the-camera.jpg?s=612x612&w=0&k=20&c=Z1maGtrEMrbAEVw6ZTJwyvq2_rkolky9LJX34mSZ6Kg=");
+        WortEintrag worteintrag2 = new WortEintrag("Hase", "https://www.vaillant.at/images/4-1-3-historie/haseundvaillant-1470066-format-flex-height@392@retina.jpg");
+        WortEintrag worteintrag3 = new WortEintrag("Schaf", "https://kiwithek.wien/images/Schaf_Lamm.jpg");
+
+        WortListe wortliste1 = new WortListe();
+        wortliste1.addWort(worteintrag1);
+        wortliste1.addWort(worteintrag2);
+        wortliste1.addWort(worteintrag3);
+
+        assertEquals("Hase", wortliste1.getWort(1).getWort());
+        assertEquals("https://www.vaillant.at/images/4-1-3-historie/haseundvaillant-1470066-format-flex-height@392@retina.jpg", wortliste1.getWort(1).getUrl());
     }
 }
