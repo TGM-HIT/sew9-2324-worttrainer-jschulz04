@@ -18,11 +18,13 @@ public class App {
         //Worteintrag
         WortEintrag worteintrag1 = new WortEintrag("Kuh", "https://media.istockphoto.com/id/1319467946/photo/young-black-and-white-cow-heifer-in-a-meadow-looking-in-the-camera.jpg?s=612x612&w=0&k=20&c=Z1maGtrEMrbAEVw6ZTJwyvq2_rkolky9LJX34mSZ6Kg=");
         WortEintrag worteintrag2 = new WortEintrag("Hase", "https://www.vaillant.at/images/4-1-3-historie/haseundvaillant-1470066-format-flex-height@392@retina.jpg");
+        WortEintrag worteintrag3 = new WortEintrag("Schaf", "https://kiwithek.wien/images/Schaf_Lamm.jpg");
 
         //Wortliste
         WortListe wortliste1 = new WortListe();
         wortliste1.addWort(worteintrag1);
         wortliste1.addWort(worteintrag2);
+        wortliste1.addWort(worteintrag3);
 
         //Worttrainer
         WortTrainer trainer = new WortTrainer(wortliste1);
