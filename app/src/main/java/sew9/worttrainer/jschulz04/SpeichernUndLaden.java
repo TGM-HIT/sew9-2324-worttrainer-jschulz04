@@ -28,15 +28,9 @@ public class SpeichernUndLaden{
 	public void speichern(String filename) throws IOException {
 		File f = new File(filename);
 		BufferedWriter writer = null;
-		WortEintrag[] wortliste = wortTrainer.getWortListe().getWortEintragArray();
 		writer = new BufferedWriter(new FileWriter(f));
 		writer.write(wortTrainer.getRichtig() + System.lineSeparator() + wortTrainer.getFalsch() + System.lineSeparator());
-		for (int i = 0; i < wortliste.length; ++i) {
-			writer.write(wortliste[i].getWort() + ";" + wortliste[i].getUrl() + System.lineSeparator());
-		}
-		if (writer != null) {
-			writer.close();
-		}
+		writer.close();
 	}
 
 	/**
@@ -51,23 +45,16 @@ public class SpeichernUndLaden{
 	 * @param filename der Speicherrort
 	 * @return den geladenen Worttrainer
 	 */
-	public WortTrainer laden(String filename) throws IOException {
+	public void laden(String filename) throws IOException {
 		Scanner reader = new Scanner(new BufferedReader(new FileReader(filename)));
-		String[] text;
-		WortTrainer worttrainer = new WortTrainer();
 		try {
-			worttrainer.addRichtig(Integer.parseInt((reader.nextLine())));
-			worttrainer.addFalsch(Integer.parseInt(reader.nextLine()));
-
-			while (reader.hasNext()) {
-				text = reader.nextLine().split(";");
-
-				worttrainer.getWortListe().addWort(new WortEintrag(text[0], text[1]));
-			}		
+			int richtige = Integer.parseInt(reader.nextLine());
+			int falsche = Integer.parseInt(reader.nextLine());
+			wortTrainer.addRichtig(richtige);
+			wortTrainer.addFalsch(falsche);		
 		} finally {
 		reader.close();
 		}
-		return worttrainer;
 	}
 	
 	/**
@@ -75,7 +62,7 @@ public class SpeichernUndLaden{
 	 * @throws IOException
 	 * @return den geladenen Worttrainer
 	 */
-	public WortTrainer laden() throws IOException {
-		return laden(this.filename);
+	public void laden() throws IOException {
+		laden(this.filename);
 	}
 }

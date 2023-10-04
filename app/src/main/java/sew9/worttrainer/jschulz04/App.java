@@ -1,5 +1,6 @@
 package sew9.worttrainer.jschulz04;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 
@@ -15,7 +16,7 @@ import javax.swing.JOptionPane;
 public class App {
     public static void main(String[] args) {
         //Worteintrag
-        WortEintrag worteintrag1 = new WortEintrag("eins", "www.eins.com");
+        WortEintrag worteintrag1 = new WortEintrag("Kuh", "https://media.istockphoto.com/id/1319467946/photo/young-black-and-white-cow-heifer-in-a-meadow-looking-in-the-camera.jpg?s=612x612&w=0&k=20&c=Z1maGtrEMrbAEVw6ZTJwyvq2_rkolky9LJX34mSZ6Kg=");
 
         //Wortliste
         WortListe wortliste1 = new WortListe();
@@ -23,6 +24,13 @@ public class App {
 
         //Worttrainer
         WortTrainer trainer = new WortTrainer(wortliste1);
+        SpeichernUndLaden sul = new SpeichernUndLaden(trainer);
+        try {
+            sul.laden();
+        } catch (IOException e) {
+            System.out.println("EI OU Exteption");
+        }
+
         String antwort = "";
         ImageIcon ii;
 
@@ -41,6 +49,11 @@ public class App {
                     System.out.println("FELA");
                 }
                 if(antwort.equals("")){
+                    try {
+                        sul.speichern();
+                    } catch (IOException e) {
+                        System.out.println("EI OU Exteption");
+                    }
                     spielBeendet = true;
                     break;
                 }
