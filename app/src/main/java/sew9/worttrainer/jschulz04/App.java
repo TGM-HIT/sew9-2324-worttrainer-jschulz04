@@ -17,10 +17,12 @@ public class App {
     public static void main(String[] args) {
         //Worteintrag
         WortEintrag worteintrag1 = new WortEintrag("Kuh", "https://media.istockphoto.com/id/1319467946/photo/young-black-and-white-cow-heifer-in-a-meadow-looking-in-the-camera.jpg?s=612x612&w=0&k=20&c=Z1maGtrEMrbAEVw6ZTJwyvq2_rkolky9LJX34mSZ6Kg=");
+        WortEintrag worteintrag2 = new WortEintrag("Hase", "https://www.vaillant.at/images/4-1-3-historie/haseundvaillant-1470066-format-flex-height@392@retina.jpg");
 
         //Wortliste
         WortListe wortliste1 = new WortListe();
         wortliste1.addWort(worteintrag1);
+        wortliste1.addWort(worteintrag2);
 
         //Worttrainer
         WortTrainer trainer = new WortTrainer(wortliste1);
@@ -28,10 +30,10 @@ public class App {
         try {
             sul.laden();
         } catch (IOException e) {
-            System.out.println("EI OU Exteption");
+            System.out.println("Laden fehlgeschlagen");
         }
 
-        String antwort = "";
+        String antwort = "", versuchDavor = "Erster Versuch";
         ImageIcon ii;
 
         Random r = new Random();
@@ -43,16 +45,16 @@ public class App {
             do{
                 try {
                     ii = new ImageIcon(new URL(neuesWort.getUrl()));
-                    JOptionPane.showMessageDialog(null, "Merk dir das Bild: ", "Display Image", JOptionPane.INFORMATION_MESSAGE, ii);
+                    JOptionPane.showMessageDialog(null, "Bisher richtige: "+trainer.getRichtig()+"\nBisher falsche: "+trainer.getFalsch()+"\nVersuch davor: "+versuchDavor+"\nMerk dir das Bild: ", "Display Image", JOptionPane.INFORMATION_MESSAGE, ii);
                     antwort = JOptionPane.showInputDialog(null, "Was war auf dem Bild zu sehen?");
                 } catch (Exception e) {
-                    System.out.println("FELA");
+                    System.out.println("Fehler beim Bild anzeigen");
                 }
                 if(antwort.equals("")){
                     try {
                         sul.speichern();
                     } catch (IOException e) {
-                        System.out.println("EI OU Exteption");
+                        System.out.println("Fehler beim speichern");
                     }
                     spielBeendet = true;
                     break;
@@ -61,10 +63,12 @@ public class App {
                     JOptionPane.showMessageDialog(null, "Richtig :)");
                     trainer.addRichtig(1);
                     wortRichtig = true;
+                    versuchDavor = "Richtig";
                 } else {
                     JOptionPane.showMessageDialog(null, "Falsch :(");
                     trainer.addFalsch(1);
                     wortRichtig = false;
+                    versuchDavor = "Falsch";
                 }
             }while(!wortRichtig);
         }
