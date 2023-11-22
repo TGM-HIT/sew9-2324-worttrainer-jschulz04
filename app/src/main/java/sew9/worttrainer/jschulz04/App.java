@@ -28,7 +28,7 @@ public class App {
 
         //Worttrainer
         WortTrainer trainer = new WortTrainer(wortliste1);
-        SpeichernUndLaden sul = new SpeichernUndLaden(trainer);
+        SpeichernUndLadenInterface sul = new SpeichernUndLaden(trainer);
         try {
             sul.laden();
         } catch (IOException e) {

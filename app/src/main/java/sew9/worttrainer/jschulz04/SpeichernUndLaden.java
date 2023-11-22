@@ -6,7 +6,7 @@ import java.util.Scanner;
  * @author Johannes Schulz
  * @version 20-09-2022
  */
-public class SpeichernUndLaden{
+public class SpeichernUndLaden implements SpeichernUndLadenInterface{
 	private final String filename = "worttrainer.txt";
 	WortTrainer wortTrainer;
 
